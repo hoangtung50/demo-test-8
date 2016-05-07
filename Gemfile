@@ -9,12 +9,14 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'simple_form'
 gem 'rails_admin', '~> 0.8.1'
 gem "slim-rails"
 gem 'font-awesome-rails'
 gem 'bootstrap-sass'
 gem 'paperclip'
 gem 'materialize-sass'
+gem "seedbank"
 
 group :development, :test do
   gem 'rspec-rails'         # Rails testing

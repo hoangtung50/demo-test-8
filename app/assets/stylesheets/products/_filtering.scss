@@ -1,0 +1,19 @@
+.products-filtering-container {
+	img {
+  	width: 100%;
+  }
+
+  .filter-element{
+  	.title{
+  		padding: 5px;
+  	}
+  	.input{
+  		padding: 5px;
+  		margin: 5px;
+  	}
+  	span{
+  		weight: 100%;
+  		display: block;
+  	}
+  }
+}

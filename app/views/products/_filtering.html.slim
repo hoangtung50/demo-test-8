@@ -1,0 +1,50 @@
+.products-filtering-container
+	h5 Refine by
+	= simple_form_for @product_filter, url: products_path, html: { method: :get }, remote: true do |f|
+		.filter-element
+			.title
+				strong Brand
+			.input
+				= f.collection_check_boxes :brand_ids, Brand.all, :id, :name
+		.filter-element
+			.title 
+				strong Price($)
+			.input
+				= f.hidden_field :min_price, :value => 0
+				= f.hidden_field :max_price, :value => 99999
+			#price_range
+
+
+coffee:
+	$('.products-filtering-container .simple_form').change ->
+		$(this).submit()
+
+javascript:
+	var price_range = document.getElementById('price_range');
+
+	noUiSlider.create(price_range, {
+		start: [ 0, 9999 ],
+		connect: true,
+		range: {
+			'min': 0,
+			'max': 99999
+		}
+	});
+
+	var input_min_price = document.getElementById('product_filter_min_price');
+	var input_max_price = document.getElementById('product_filter_max_price');
+
+	price_range.noUiSlider.on('change', function( values, handle ) {
+
+		var value = values[handle];
+
+		if ( handle ) {
+			input_max_price.value = value;
+		} else {
+			input_min_price.value = value;
+		}
+
+		$('.products-filtering-container .simple_form').submit()
+	});
+
+
