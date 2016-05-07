@@ -1,0 +1,12 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: rails_test_8_development
+
+test:
+  <<: *default
+  database: rails_test_8_test
