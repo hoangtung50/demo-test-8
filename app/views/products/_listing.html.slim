@@ -5,13 +5,11 @@
 		.col.m5.s12
 			p = @products.count.to_s + " matching products"
 		.col.m4.s12.right-align
-			p Sort by
+			p Sort by name
 		.col.m3.s12
-			input-field.col.s12
-				select
-					option selected="" value="1"  Anphabetical
-					option value="2"  Option 2
-					option value="3"  Option 3
+			select
+				option selected="" value="asc"  Acs   
+				option value="desc"  Desc   
 	ul.row
 		- @products.each do |product|
 			li.col.m4.s12
@@ -26,12 +24,18 @@
 						p
 							b = product.price
 					.card-action.center-align
-						= link_to "Add to card", "" 
+						= link_to image_tag(image_path("add-to-cart.png"))
 	.col.m12.s12
 		= js_will_paginate @products
 
-javascript:
-	$('.products-listing-container select').material_select();
+coffee:
+	$('.products-listing-container select').val($('#product_filter_order').first().val())
+	$('.products-listing-container select').change ->
+		$('#product_filter_order').first().val($(this).val())
+		$('.products-filtering-container .simple_form').submit()
 
+
+		
+		
 
 			

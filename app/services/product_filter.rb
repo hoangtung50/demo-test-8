@@ -8,6 +8,7 @@ class ProductFilter
     @brand_ids = option[:brand_ids]
     @max_price = option[:max_price]
     @min_price = option[:min_price]
+    @order = option[:order]
   end
 
   def filter
@@ -16,6 +17,7 @@ class ProductFilter
     products = products.find_by_brand_ids(brand_ids) if brand_ids.present?
     products = products.find_by_max_price(max_price) if max_price.present?
     products = products.find_by_min_price(min_price) if min_price.present?
+    products = order.present? ? products.order("name #{order}") : products.order("name asc")
     
     products 
   end

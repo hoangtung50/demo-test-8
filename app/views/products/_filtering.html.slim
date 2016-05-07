@@ -11,13 +11,16 @@
 				strong Price($)
 			.input
 				= f.hidden_field :min_price, :value => 0
-				= f.hidden_field :max_price, :value => 99999
+				= f.hidden_field :max_price, :value => 9999
+				= f.hidden_field :order, :value => 'asc'
 			#price_range
 
 
 coffee:
 	$('.products-filtering-container .simple_form').change ->
 		$(this).submit()
+
+	$('.products-listing-container select').val($('#product_filter_order').first().val())
 
 javascript:
 	var price_range = document.getElementById('price_range');
