@@ -17,6 +17,7 @@ gem 'bootstrap-sass'
 gem 'paperclip'
 gem 'materialize-sass'
 gem "seedbank"
+gem 'will_paginate'
 
 group :development, :test do
   gem 'rspec-rails'         # Rails testing

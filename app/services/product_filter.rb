@@ -1,7 +1,7 @@
 class ProductFilter
 	include ActiveModel::Conversion
   extend  ActiveModel::Naming
-	attr_accessor :brand_ids, :max_price, :min_price
+	attr_accessor :brand_ids, :max_price, :min_price, :order
 
   def initialize(option)
     return if option.nil?

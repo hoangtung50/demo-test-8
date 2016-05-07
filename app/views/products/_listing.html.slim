@@ -2,49 +2,33 @@
 	.row
 		= link_to image_tag(image_path("banner.png"))
 	.row.header-product-list
-	  .col.m5.s12
-	  	p = @products.count.to_s + " matching products"
-	  .col.m4.s12.right-align
-	  	p Sort by
-	  .col.m3.s12
-	  	input-field.col.s12
-		  	select
-				  option selected="" value="1"  Anphabetical
-				  option value="2"  Option 2
-				  option value="3"  Option 3
+		.col.m5.s12
+			p = @products.count.to_s + " matching products"
+		.col.m4.s12.right-align
+			p Sort by
+		.col.m3.s12
+			input-field.col.s12
+				select
+					option selected="" value="1"  Anphabetical
+					option value="2"  Option 2
+					option value="3"  Option 3
 	ul.row
 		- @products.each do |product|
-		  li.col.m4.s12
-		    .card
-		      .card-image
-		        = link_to image_tag(product.picture.url)
-		      .card-content
-		        h6
-		          = link_to product.name, ""
-		        p
-		          i = product.sku
-		        p
-		          b = product.price
-		      .card-action
-		        = link_to "Add to card", "" 
+			li.col.m4.s12
+				.card
+					.card-image
+						= link_to image_tag(product.picture.url)
+					.card-content
+						h6
+							= link_to product.name, ""
+						p
+							i = product.sku
+						p
+							b = product.price
+					.card-action.center-align
+						= link_to "Add to card", "" 
 	.col.m12.s12
-    ul.pagination
-		  li.disabled
-		    a href="#" 
-		      i.material-icons chevron_left
-		  li.active
-		    a href="#"  1
-		  li
-		    a href="#"  2
-		  li
-		    a href="#"  3
-		  li
-		    a href="#"  4
-		  li
-		    a href="#"  5
-		  li
-		    a href="#" 
-		      i.material-icons chevron_right 
+		= js_will_paginate @products
 
 javascript:
 	$('.products-listing-container select').material_select();

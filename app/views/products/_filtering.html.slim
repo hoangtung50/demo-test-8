@@ -5,7 +5,7 @@
 			.title
 				strong Brand
 			.input
-				= f.collection_check_boxes :brand_ids, Brand.all, :id, :name
+				= f.collection_check_boxes :brand_ids, Brand.all, :id, :name, checked: Brand.all.map(&:id)
 		.filter-element
 			.title 
 				strong Price($)
