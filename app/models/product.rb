@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
 	belongs_to :brand
 
-	has_attached_file     :picture, styles: { medium: "540x360#", thumb: "270x180#", small: '70x47' }, default_url: "products/pictures/:style/missing.png"
+	has_attached_file     :picture, styles: { thumb: "270x180#" }, default_url: "products/pictures/:style/missing.png"
   validates_attachment  :picture, content_type: { content_type: /\Aimage\/.*\Z/ }, size: { less_than: 5.megabyte }
 
 	validates :name,     presence: true

@@ -1,1 +1,2 @@
 $('#products-listing').html("<%= j render partial: 'products/listing'%> ");
+window.history.pushState('','',"<%= request.url %>");

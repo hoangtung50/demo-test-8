@@ -15,7 +15,7 @@
 			li.col.m4.s12
 				.card
 					.card-image
-						= link_to image_tag(product.picture.url)
+						= link_to image_tag(product.picture.url(:thumb))
 					.card-content
 						h6
 							= link_to product.name, ""

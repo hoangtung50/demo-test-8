@@ -5,14 +5,14 @@
 			.title
 				strong Brand
 			.input
-				= f.collection_check_boxes :brand_ids, Brand.all, :id, :name, checked: Brand.all.map(&:id)
+				= f.collection_check_boxes :brand_ids, Brand.all, :id, :name
 		.filter-element
 			.title 
 				strong Price($)
 			.input
-				= f.hidden_field :min_price, :value => 0
-				= f.hidden_field :max_price, :value => 9999
-				= f.hidden_field :order, :value => 'asc'
+				= f.hidden_field :min_price
+				= f.hidden_field :max_price
+				= f.hidden_field :order
 			#price_range
 
 
@@ -24,18 +24,17 @@ coffee:
 
 javascript:
 	var price_range = document.getElementById('price_range');
+	var input_min_price = document.getElementById('product_filter_min_price');
+	var input_max_price = document.getElementById('product_filter_max_price');
 
 	noUiSlider.create(price_range, {
-		start: [ 0, 9999 ],
+		start: [ input_min_price.value, input_max_price.value ],
 		connect: true,
 		range: {
 			'min': 0,
 			'max': 99999
 		}
 	});
-
-	var input_min_price = document.getElementById('product_filter_min_price');
-	var input_max_price = document.getElementById('product_filter_max_price');
 
 	price_range.noUiSlider.on('change', function( values, handle ) {
 
