@@ -7,6 +7,6 @@ class ProductsController < ApplicationController
   private
 
   def product_filter_params
-    params.require(:product_filter).permit(:min_price, :max_price, :order, brand_ids: [])
+    params[:product_filter]
   end
 end
