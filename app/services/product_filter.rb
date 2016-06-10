@@ -14,6 +14,8 @@ class ProductFilter
   def filter
     products = Product.all
 
+    
+
     products = products.find_by_brand_ids(brand_ids) if brand_ids.present?
     products = products.find_by_max_price(max_price) if max_price.present?
     products = products.find_by_min_price(min_price) if min_price.present?
