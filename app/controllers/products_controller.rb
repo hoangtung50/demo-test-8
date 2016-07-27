@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   def index
     @product_filter = ProductFilter.new(product_filter_params)
-    @products       = @product_filter.filter.paginate(page: params[:page], per_page: 6)
+    @products       = @product_filter.filter
 	end
 
   private

@@ -26,7 +26,6 @@
 					.card-action.center-align
 						= link_to image_tag(image_path("add-to-cart.png"))
 	.col.m12.s12
-		= js_will_paginate @products
 
 coffee:
 	$('.products-listing-container select').val($('#product_filter_order').first().val())

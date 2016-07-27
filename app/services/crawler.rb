@@ -4,8 +4,11 @@ require 'open-uri'
 require 'json'
 
 class Crawler
-  def data
-    data = []
+  def thuenhasg
+    get_data
+  end
+
+  def get_data
     url  = 'http://thuenhasg.com'
     doc  = Nokogiri::HTML(open(url))
 
@@ -14,165 +17,52 @@ class Crawler
       title = category.at_css('a').text
       p url_category
       p title
+      p "save ====="
+
+      area = Area.find_or_create_by(name: title)
 
       next if title == 'Xem thêm'
 
-      data << { category_title: title, subs: get_items(url_category) }
+      get_items(url_category, area)
     end
-    binding.pry
-
-    data_json = data.to_json
-    export_data_json(data_json)
   end
 
-  def get_items(url_category)
-    items = []
-
+  def get_items(url_category, area)
     doc  = Nokogiri::HTML(open(url_category))
 
     doc.css(".box_tinrao").each do |item|
       url_item = item.at_css('.tit_tinrao h3 a')[:href]
-      items << get_item(url_item)
+      get_item(url_item, area)
     end
-
-    items
   end
 
-  def get_item(url_item)
+  def get_item(url_item, area)
 
-    item = {}
     p url_item
 
     doc  = Nokogiri::HTML(open(url_item))
 
-    item[:title] = doc.at_css('.tiude_tin').text
-    p item[:title]
-
     mota_ngan = doc.css('.mota_ngan li span')
 
-    item[:gia] = mota_ngan[0].text
-    item[:dientich] = mota_ngan[1].text
-    item[:chitiet] = doc.at_css('.thongtin_chitiet p').inner_html
-    item[:images] = []
-    doc.css('.amazingslider-slides li span').each do |image|
-      item[:images] << image[:href]
-    end
-
-    item
+    area.motels.create_with(price: mota_ngan[0].text, acreage: mota_ngan[1].text, description: doc.at_css('.thongtin_chitiet p').inner_html).find_or_create_by(title: doc.at_css('.tiude_tin').text)
+        
+    p "save #{area.motels.count}"
+    # item[:images] = []
+    # doc.css('.amazingslider-slides li span').each do |image|
+    #   item[:images] << image[:href]
+    # end
   end
-
-  def export_data_json(data_json)
-    tmp_file = "#{Rails.root}/tmp/data.json"
-
-    File.open(tmp_file, 'wb') do |f|
-      f.write data_json
-    end
-  end
-
-  def save_data
-    tmp_file = "#{Rails.root}/public/data.json"
-    file     = File.read(tmp_file)
-    data     = JSON.parse(file).to_a
-
+  
+  def save_data(data)
+    p 'save ==============='
     data.each do |category|
       next if category.blank?
-      name = category['category_title']
-      root_category = Category.create(title: name)
-      sub_categories = category['subs']
-      p sub_categories
-
-      sub_categories.each do |sub_category|
-        next if sub_category.blank?
-        save_sub_category(sub_category, root_category)
+      area = Area.find_or_create_by(name: category['category_title'])
+      p area.name
+      category['subs'].each do |motel|
+        m = area.motels.create_with(price: motel[:gia], acreage: motel[:dientich], description: motel[:chitiet]).find_or_create_by(title: motel[:title])
+        p m.title      
       end
     end
-  end
-
-  def save_sub_category(sub_category, category)
-    name          = sub_category['sub_category_title']
-    description   = sub_category['description']
-    new_category  = Category.create(title: name, description: description, parent: category)
-    brands        = sub_category['brands']
-
-    brands.each do |brand|
-      next if brand.blank?
-      save_brand(brand, new_category)
-    end
-  end
-
-  def save_brand(brand, category)
-    name              = brand['brand_title'].strip
-    new_brand         = Brand.where(name: name).first_or_create
-    catalogs          = brand['catalogs']
-
-    catalogs.each do |catalog|
-      next if catalog.blank?
-      save_catalog(catalog, new_brand, category)
-    end
-  end
-
-  def save_catalog(catalog, brand, category)
-    catalog_title = catalog['catalog_title']
-    new_catalog   = Catalog.create(title: catalog_title, category: category, brand: brand)
-    subs          = catalog['subs']
-
-    if subs.present?
-      subs.each do |sub|
-        next if sub.blank?
-        save_sub(sub, new_catalog, brand, category)
-      end
-    end
-  end
-
-  def save_sub(sub, catalog, brand, category)
-    if sub['catalog_title'].present?
-      save_sub_catalog(sub, catalog, brand, category)
-    else
-      save_product(sub, catalog)
-    end
-  end
-
-  def save_sub_catalog(catalog, parent_catalog, brand, category)
-    catalog_title = catalog['catalog_title']
-    new_catalog   = Catalog.create(title: catalog_title, category: category, brand: brand, parent: parent_catalog)
-    subs          = catalog['subs']
-
-    subs.each do |sub|
-      next if sub.blank?
-      save_sub(sub, new_catalog, brand, category)
-    end
-  end
-
-  def save_product(product, catalog)
-    title         = product['product_title']
-    description   = product['description']
-    new_product   = Product.create(name: title, description: description, catalog: catalog)
-    details       = product['details']
-    images        = product['images']
-
-    images.each do |image|
-      next if image.blank?
-      img_link = URI.encode(format_link(image))
-      next if img_link.include?('[')
-      res = Net::HTTP.get_response(URI.parse(img_link))
-      next unless res.code.to_f >= 200 && res.code.to_f < 400
-      Photo.create(picture: URI.parse(img_link), product: new_product)
-    end
-
-    details.each do |detail|
-      next if detail.blank?
-      save_product_item(detail, new_product)
-    end
-  end
-
-  def save_product_item(detail, product)
-    code        = detail['code']
-    description = detail['description']
-    color       = detail['color']
-    size        = detail['size']
-    unit        = detail['unit']
-
-    ProductItem.create(code: code, description: description, color: color, size: size,
-                        unit: unit, product: product)
   end
 end

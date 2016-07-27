@@ -1,0 +1,17 @@
+h1 Listing motels
+
+table
+  thead
+    tr
+      th name
+      th price
+      th acreage
+      th area
+
+  tbody
+    - @motels.each do |motel|
+      tr
+        td = motel.title
+        td = motel.price
+        td = motel.acreage
+        td = motel.area.motels.last.title

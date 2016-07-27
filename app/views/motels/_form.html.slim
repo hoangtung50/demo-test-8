@@ -1,0 +1,9 @@
+= form_for @motel do |f|
+  - if @motel.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@motel.errors.count, "error")} prohibited this motel from being saved:"
+      ul
+        - @motel.errors.full_messages.each do |message|
+          li = message
+
+  .actions = f.submit

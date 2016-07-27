@@ -11,16 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507015332) do
+ActiveRecord::Schema.define(version: 20160610090827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "areas", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "motels", force: :cascade do |t|
+    t.string   "title"
+    t.decimal  "price",       precision: 10, scale: 1, default: 0.0
+    t.decimal  "acreage",     precision: 10, scale: 1, default: 0.0
+    t.text     "description"
+    t.integer  "area_id"
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+  end
+
+  add_index "motels", ["area_id"], name: "index_motels_on_area_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
