@@ -14,8 +14,6 @@ GEM
       rack-test (~> 0.6.2)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    actionpack-action_caching (1.1.1)
-      actionpack (>= 4.0.0, < 5.0)
     actionview (4.2.6)
       activesupport (= 4.2.6)
       builder (~> 3.1)
@@ -86,8 +84,6 @@ GEM
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
-    childprocess (0.5.9)
-      ffi (~> 1.0, >= 1.0.11)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -119,7 +115,6 @@ GEM
     factory_girl_rails (4.7.0)
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
-    ffi (1.9.14)
     font-awesome-rails (4.6.2.0)
       railties (>= 3.2, < 5.1)
     globalid (0.3.6)
@@ -183,8 +178,6 @@ GEM
       pry (>= 0.9.10)
     puma (3.6.0)
     rack (1.6.4)
-    rack-cache (1.6.1)
-      rack (>= 0.4)
     rack-mini-profiler (0.10.1)
       rack (>= 1.2.0)
     rack-pjax (0.8.0)
@@ -244,28 +237,6 @@ GEM
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
-    redis (3.3.0)
-    redis-actionpack (4.0.1)
-      actionpack (~> 4)
-      redis-rack (~> 1.5.0)
-      redis-store (~> 1.1.0)
-    redis-activesupport (4.1.5)
-      activesupport (>= 3, < 5)
-      redis-store (~> 1.1.0)
-    redis-namespace (1.5.2)
-      redis (~> 3.0, >= 3.0.4)
-    redis-rack (1.5.0)
-      rack (~> 1.5)
-      redis-store (~> 1.1.0)
-    redis-rack-cache (1.2.4)
-      rack-cache (~> 1.2)
-      redis-store (~> 1.1.0)
-    redis-rails (4.0.0)
-      redis-actionpack (~> 4)
-      redis-activesupport (~> 4)
-      redis-store (~> 1.1.0)
-    redis-store (1.1.7)
-      redis (>= 2.2)
     reek (4.0.4)
       codeclimate-engine-rb (~> 0.3.1)
       parser (~> 2.3.1, >= 2.3.1.2)
@@ -297,7 +268,6 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
-    rubyzip (1.2.0)
     safe_yaml (1.0.4)
     sass (3.4.22)
     sass-rails (5.0.4)
@@ -310,10 +280,6 @@ GEM
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     seedbank (0.3.0)
-    selenium-webdriver (2.53.4)
-      childprocess (~> 0.5)
-      rubyzip (~> 1.0)
-      websocket (~> 1.0)
     sexp_processor (4.7.0)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
@@ -360,13 +326,11 @@ GEM
       coercible (~> 1.0)
       descendants_tracker (~> 0.0, >= 0.0.3)
       equalizer (~> 0.0, >= 0.0.9)
-    websocket (1.2.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionpack-action_caching
   annotate
   better_errors
   binding_of_caller
@@ -394,10 +358,6 @@ DEPENDENCIES
   rails-footnotes
   rails_admin (~> 0.8.1)
   rails_best_practices
-  redis
-  redis-namespace
-  redis-rack-cache
-  redis-rails
   reek
   request-log-analyzer
   rspec-rails
@@ -405,7 +365,6 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   seedbank
-  selenium-webdriver (~> 2.53)
   shoulda
   simple_form
   slim-rails

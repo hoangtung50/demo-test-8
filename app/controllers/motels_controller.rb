@@ -3,7 +3,6 @@ class MotelsController < ApplicationController
 
   # GET /motels
   # GET /motels.json
-  caches_action :index, :show
   def index
     @motels = Motel.all
   end

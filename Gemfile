@@ -17,12 +17,7 @@ gem 'bootstrap-sass'
 gem 'paperclip'
 gem 'materialize-sass'
 gem "seedbank"
-gem 'redis'
-gem 'redis-namespace'
-gem 'redis-rails'
-gem 'redis-rack-cache'
 
-gem 'actionpack-action_caching'
 gem 'puma'
 
 group :development, :test do
@@ -33,7 +28,6 @@ group :development, :test do
   gem 'binding_of_caller'   # Required by better_errors gem
 
   gem 'letter_opener'
-  gem 'selenium-webdriver', '~> 2.53'
 end
 
 group :development do
